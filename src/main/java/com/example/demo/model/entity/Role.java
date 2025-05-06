@@ -1,4 +1,4 @@
-package com.example.demo;
+package com.example.demo.model.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -9,22 +9,10 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "roles")
-public class Role {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+public class Role extends BaseEntity {
 
     @Column(nullable = false, unique = true, length = 64)
     private String name;
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
 
     public String getName() {
         return name;
@@ -33,7 +21,5 @@ public class Role {
     public void setName(String name) {
         this.name = name;
     }
-    
-    
 
 }

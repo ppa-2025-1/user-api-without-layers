@@ -1,4 +1,4 @@
-package com.example.demo;
+package com.example.demo.controller;
 
 import java.util.HashSet;
 import java.util.List;
@@ -16,6 +16,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.demo.dto.NewUser;
+import com.example.demo.model.business.UserBusiness;
+import com.example.demo.model.entity.User;
+import com.example.demo.repository.UserRepository;
+
 import jakarta.validation.Valid;
 
 import org.springframework.web.bind.annotation.RequestParam;
@@ -30,7 +35,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 @RestController
 @RequestMapping("/api/v1/users")
-public class UserController {
+public class UserController extends AbstractController {
 
     private final UserRepository userRepository;
     private final UserBusiness userBusiness;

@@ -1,4 +1,4 @@
-package com.example.demo;
+package com.example.demo.model.entity;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -18,11 +18,7 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "users")
-public class User {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+public class User extends BaseEntity {
 
     @Column(nullable = false, unique = true, length = 255)
     private String email;
@@ -43,14 +39,6 @@ public class User {
         inverseJoinColumns = @JoinColumn(name = "role_id")
     )
     private Set<Role> roles = new HashSet<>();
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
 
     public String getEmail() {
         return email;

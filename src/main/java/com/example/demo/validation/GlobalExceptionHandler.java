@@ -1,4 +1,4 @@
-package com.example.demo;
+package com.example.demo.validation;
 
 import java.util.Map;
 import java.util.stream.Collector;

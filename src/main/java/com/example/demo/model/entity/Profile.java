@@ -1,34 +1,20 @@
-package com.example.demo;
-
-import com.fasterxml.jackson.annotation.JsonBackReference;
+package com.example.demo.model.entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.MapsId;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "profiles")
-public class Profile {
+public class Profile extends BaseEntity {
 
     public enum AccountType {
         FREE,
         PROFESSIONAL,
         ENTERPRISE
     }
-    
-    @Id
-    private Integer id;
-
-    @MapsId
-    @OneToOne
-    @JoinColumn(name = "id")
-    @JsonBackReference
-    private User user;
 
     private String name;
     private String company;
@@ -36,12 +22,15 @@ public class Profile {
     @Enumerated(EnumType.STRING)
     private AccountType type;
 
-    public Integer getId() {
-        return id;
+    @OneToOne
+    private User user;
+
+    public User getUser() {
+        return user;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public String getName() {
@@ -67,14 +56,5 @@ public class Profile {
     public void setType(AccountType type) {
         this.type = type;
     }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
     
 }

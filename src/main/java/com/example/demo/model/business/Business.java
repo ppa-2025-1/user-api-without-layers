@@ -1,4 +1,4 @@
-package com.example.demo;
+package com.example.demo.model.business;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
