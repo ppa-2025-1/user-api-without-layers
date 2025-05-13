@@ -6,8 +6,8 @@ import java.util.List;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import com.example.demo.model.entity.Role;
 import com.example.demo.repository.RoleRepository;
+import com.example.demo.repository.entity.Role;
 
 import jakarta.annotation.PostConstruct;
 

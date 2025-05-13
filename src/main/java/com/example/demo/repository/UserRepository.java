@@ -2,11 +2,10 @@ package com.example.demo.repository;
 
 import java.util.Optional;
 
-import org.springframework.data.repository.ListCrudRepository;
+import com.example.demo.domain.out.IUserRepository;
+import com.example.demo.repository.entity.User;
 
-import com.example.demo.model.entity.User;
-
-public interface UserRepository extends BaseRepository<User, Integer> {
+public interface UserRepository extends IUserRepository, BaseRepository<User, Integer> {
 
     Optional<User> findByEmail(String email);
     // This interface will automatically provide CRUD operations for the User entity

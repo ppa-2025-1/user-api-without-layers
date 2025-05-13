@@ -16,10 +16,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.demo.dto.NewUser;
-import com.example.demo.model.business.UserBusiness;
-import com.example.demo.model.entity.User;
+import com.example.demo.domain.CriarUsuarioUserCase;
+import com.example.demo.domain.dto.NewUser;
 import com.example.demo.repository.UserRepository;
+import com.example.demo.repository.entity.User;
 
 import jakarta.validation.Valid;
 
@@ -38,10 +38,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class UserController extends AbstractController {
 
     private final UserRepository userRepository;
-    private final UserBusiness userBusiness;
+    private final CriarUsuarioUserCase userBusiness;
 
     public UserController(UserRepository userRepository,
-                          UserBusiness userBusiness) {
+                          CriarUsuarioUserCase userBusiness) {
         this.userRepository = userRepository;
         this.userBusiness = userBusiness;
     }

@@ -1,4 +1,4 @@
-package com.example.demo.model.business;
+package com.example.demo.domain;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -10,6 +10,6 @@ import org.springframework.stereotype.Component;
 @Component
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)
-public @interface Business {
+public @interface UseCase {
     
 }

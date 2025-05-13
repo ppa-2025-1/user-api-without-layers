@@ -1,4 +1,4 @@
-package com.example.demo.model.entity;
+package com.example.demo.repository.entity;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -15,6 +15,8 @@ import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
+
+// Object-Relational Mapping (ORM)
 
 @Entity
 @Table(name = "users")

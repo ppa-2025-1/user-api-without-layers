@@ -4,15 +4,15 @@ import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Component;
 
 import com.example.demo.config.RabbitMQConfig;
-import com.example.demo.dto.NewUser;
-import com.example.demo.model.business.UserBusiness;
+import com.example.demo.domain.CriarUsuarioUserCase;
+import com.example.demo.domain.dto.NewUser;
 
 @Component
 public class NewUserEventListener {
 
-    private final UserBusiness userBusiness;
+    private final CriarUsuarioUserCase userBusiness;
 
-    public NewUserEventListener(UserBusiness userBusiness) {
+    public NewUserEventListener(CriarUsuarioUserCase userBusiness) {
         this.userBusiness = userBusiness;
     }
 

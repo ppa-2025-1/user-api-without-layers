@@ -1,4 +1,4 @@
-package com.example.demo.model.entity;
+package com.example.demo.repository.entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;

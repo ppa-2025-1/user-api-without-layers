@@ -29,7 +29,7 @@ Host: localhost:8080
 Content-Type: application/json
 
 {
-    "email": "",
+    "email": "teste@teste.com",
     "password": "1234RT56",
     "handle": "papas",
     "name": "Kartofel",

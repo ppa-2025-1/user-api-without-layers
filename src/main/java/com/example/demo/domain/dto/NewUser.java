@@ -1,8 +1,8 @@
-package com.example.demo.dto;
+package com.example.demo.domain.dto;
 
 import java.util.List;
 
-import com.example.demo.model.entity.Profile;
+import com.example.demo.repository.entity.Profile;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;

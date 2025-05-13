@@ -1,41 +1,45 @@
-package com.example.demo.model.business;
+package com.example.demo.domain;
 
 import java.util.HashSet;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.RequestBody;
 
-import com.example.demo.dto.NewUser;
-import com.example.demo.model.entity.Profile;
-import com.example.demo.model.entity.Role;
-import com.example.demo.model.entity.User;
-import com.example.demo.repository.RoleRepository;
-import com.example.demo.repository.UserRepository;
+import com.example.demo.domain.dto.NewUser;
+import com.example.demo.domain.out.IPasswordEncoder;
+import com.example.demo.domain.out.IRoleRepository;
+import com.example.demo.domain.out.IUserRepository;
+import com.example.demo.repository.entity.Profile;
+import com.example.demo.repository.entity.Role;
+import com.example.demo.repository.entity.User;
+
+// HIGH-LEVEL POLICY: políticas de alto nível
 
 // classe que representa o negócio
-@Business // marcar como um Bean de Negócio
-public class UserBusiness {
+@UseCase // marcar como um Bean de Negócio
+public class CriarUsuarioUserCase {
     
-    private UserRepository userRepository;
-    private RoleRepository roleRepository;
-    private BCryptPasswordEncoder passwordEncoder;
+    // dependências para o lado de fora do domain
+    private IUserRepository userRepository;
+    private IRoleRepository roleRepository;
+    private IPasswordEncoder passwordEncoder;
+    // ------------------------------------------
+
     private Set<String> defaultRoles;
 
-    public UserBusiness(
-            UserRepository userRepository, 
-            RoleRepository roleRepository,
+    public CriarUsuarioUserCase(
+            IUserRepository userRepository, 
+            IRoleRepository roleRepository,
+            IPasswordEncoder passwordEncoder,
             @Value("${app.user.default.roles}") Set<String> defaultRoles) {
 
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;   
-        this.passwordEncoder = new BCryptPasswordEncoder();
+        this.passwordEncoder = passwordEncoder;
         this.defaultRoles = defaultRoles;
     }
 
-
+    // contém toda a lógica de criação de usuário
     public void criarUsuario(NewUser newUser) {
         // BUSINESS RULES
         // DOMAIN RULES
@@ -108,23 +112,4 @@ public class UserBusiness {
         return handle;
     }
 
-}
-
-// Classe -> Objetos desta classe
-// Toda classe é uma ABSTRAÇÃO
-class Porta {
-    // ENCAPSULAMENTO
-    // encapsular o estado
-    private boolean fechada = true;
-
-    // API do objeto (para acessar o estado)
-    public boolean isAberta() {
-        return ! this.fechada;
-    }
-
-    // COMPORTAMENTO (behavior)
-    // Métodos
-    public void abrir() {
-        this.fechada = false;
-    }
 }
