@@ -1,4 +1,3 @@
-
 ### Get all users
 
 GET /api/v1/users HTTP/1.1
@@ -38,3 +37,27 @@ Content-Type: application/json
     ],
     "company": "potato inc"
 }
+
+### Post para novo chamado
+POST /api/v1/chamados HTTP/1.1
+Host: localhost:8080
+Content-Type: application/json
+
+{
+    "acao": "abrir",
+    "objeto": "computador",
+    "detalhamento": "computador não liga",
+    "situacao": "NOVO",
+    "usuarioId":  1
+}
+
+### Get all chamados
+GET /api/v1/chamados HTTP/1.1
+Host: localhost:8080
+Accept: application/json
+
+### Get user by ID
+GET /api/v1/users/1 HTTP/1.1    
+Host: localhost:8080
+Accept: application/json
+
