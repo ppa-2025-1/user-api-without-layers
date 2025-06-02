@@ -5,8 +5,6 @@ import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import com.example.demo.dto.NewUser;
 import com.example.demo.model.entity.Profile;
@@ -23,12 +21,15 @@ public class UserBusiness {
     private RoleRepository roleRepository;
     private BCryptPasswordEncoder passwordEncoder;
     private Set<String> defaultRoles;
+    private MailNotificationBusiness mailNotificationBusiness;
 
     public UserBusiness(
+            MailNotificationBusiness mailNotificationBusiness,
             UserRepository userRepository, 
             RoleRepository roleRepository,
             @Value("${app.user.default.roles}") Set<String> defaultRoles) {
 
+        this.mailNotificationBusiness = mailNotificationBusiness;
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;   
         this.passwordEncoder = new BCryptPasswordEncoder();
@@ -96,6 +97,11 @@ public class UserBusiness {
         user.setProfile(profile);
 
         userRepository.save(user); 
+
+        mailNotificationBusiness.sendNotification(
+            user.getEmail(),
+            "Sua conta foi criada",
+            "Parabéns, sua conta foi criada com sucesso. Bem-vindo a bordo do nosso espetacular serviço de usuários. lorem ipsum dolor nocet");
     }
 
     private String generateHandle(String email) {
