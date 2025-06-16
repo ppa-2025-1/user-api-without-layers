@@ -1,5 +1,7 @@
 package com.example.demo.service;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.mail.MailSender;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.stereotype.Component;
@@ -7,7 +9,9 @@ import org.springframework.stereotype.Component;
 @Component("mail-notification")
 class MailNotificationService implements NotificationService {
 
-    
+    private static Logger logger = LoggerFactory
+        .getLogger(MailNotificationService.class.getName());
+
     private final MailSender mailSender;
 
     public MailNotificationService(MailSender mailSender) {
@@ -15,17 +19,17 @@ class MailNotificationService implements NotificationService {
     }
 
     @Override
-    public void sendNotification(
-        String destination, 
-        String title, 
-        String body) {
+    public void sendNotification(String destination, 
+        String title, String body) {
 
         SimpleMailMessage message = new SimpleMailMessage();
         message.setSubject(title);
         message.setTo(destination);
         message.setText(body);
-        System.out.println("Sending mail to " + destination + " with title: " + title + " and body: " + body);
+        logger.info("Enviando e-mail para {} assunto {}", 
+            destination, 
+            title
+        );
         mailSender.send(message);
-
     }
 }
