@@ -87,7 +87,7 @@ public class UserBusiness {
 
         userRepository.save(user); 
 
-        notification.send(
+        notification.send( // AGENDADO (BACKGROUND)
             user.getEmail(),
             "Sua conta foi criada",
             "Parabéns, sua conta foi criada com sucesso. Bem-vindo a bordo do nosso espetacular serviço de usuários. lorem ipsum dolor nocet");
