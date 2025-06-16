@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 
 @Component("mail-notification")
 class MailNotificationService implements NotificationService {
+
     
     private final MailSender mailSender;
 

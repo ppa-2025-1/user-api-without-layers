@@ -1,23 +1,25 @@
 package com.example.demo.service;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 // sem visibilidade, package private (default)
 // privado do pacote
 @Component("sms-notification")
-class SmsNotificationService
-    implements NotificationService {
-    
+class SmsNotificationService implements NotificationService {
+
+    private static Logger logger = LoggerFactory
+            .getLogger(SmsNotificationService.class.getName());
+
     @Override
-    public void sendNotification(
-        String destination, 
-        String title, 
-        String body) {
+    public void sendNotification(String destination, 
+                                 String title, 
+                                 String body) {
 
-        System.out.println("Enviando SMS ...");
-        System.out.println(destination);
-        System.out.println(title);
-        System.out.println(body);
-
+        logger.info("Enviando SMS para {} com o assunto {}",
+          destination,
+          title
+        );
     }
 }
