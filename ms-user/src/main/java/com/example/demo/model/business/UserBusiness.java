@@ -3,6 +3,10 @@ package com.example.demo.model.business;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.springframework.amqp.core.Exchange;
+import org.springframework.amqp.core.Message;
+import org.springframework.amqp.core.MessageBuilder;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
@@ -20,15 +24,22 @@ public class UserBusiness {
     private RoleRepository roleRepository;
     private BCryptPasswordEncoder passwordEncoder;
     private Set<String> defaultRoles;
-    private INotification notification;
+
+    private RabbitTemplate rabbitTemplate;
+    private Exchange exchange;
 
     public UserBusiness(
-            INotification notification,
+            
+            Exchange exchange,
+            RabbitTemplate rabbitTemplate,
+
             UserRepository userRepository, 
             RoleRepository roleRepository,
             @Value("${app.user.default.roles}") Set<String> defaultRoles) {
 
-        this.notification = notification;
+        this.exchange = exchange;
+        this.rabbitTemplate = rabbitTemplate;
+
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;   
         this.passwordEncoder = new BCryptPasswordEncoder();
@@ -87,10 +98,19 @@ public class UserBusiness {
 
         userRepository.save(user); 
 
-        notification.send( // AGENDADO (BACKGROUND)
-            user.getEmail(),
-            "Sua conta foi criada",
-            "Parabéns, sua conta foi criada com sucesso. Bem-vindo a bordo do nosso espetacular serviço de usuários. lorem ipsum dolor nocet");
+        String body = "Usuário criado: " + user.getEmail();
+        Message msg = new Message(body.getBytes());
+        rabbitTemplate.send(exchange.getName(), 
+                            "usuario.criado",
+                            msg);
+
+        /*
+         * notification.send( // AGENDADO (BACKGROUND)
+         * user.getEmail(),
+         * "Sua conta foi criada",
+         * "Parabéns, sua conta foi criada com sucesso. Bem-vindo a bordo do nosso espetacular serviço de usuários. lorem ipsum dolor nocet"
+         * );
+         */
     }
 
     private String generateHandle(String email) {

@@ -1,0 +1,13 @@
+version: "3.8"
+# Yet Another Markup Language (Sim, outra linguagem de marcação)
+services:
+  mensageria:
+    image: rabbitmq:4-management 
+    container_name: rabbitmq-container
+    ports:
+      - 5672:5672
+      - 15672:15672
+    environment:
+      - RABBITMQ_DEFAULT_USER=user
+      - RABBITMQ_DEFAULT_PASS=1234
+      
