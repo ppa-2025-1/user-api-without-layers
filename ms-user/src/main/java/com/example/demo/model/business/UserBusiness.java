@@ -1,6 +1,7 @@
 package com.example.demo.model.business;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import org.springframework.amqp.core.Exchange;
@@ -11,6 +12,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import com.example.demo.dto.NewUser;
+import com.example.demo.dto.Notification;
+import com.example.demo.messaging.UserMessaging;
 import com.example.demo.model.entity.Profile;
 import com.example.demo.model.entity.Role;
 import com.example.demo.model.entity.User;
@@ -20,25 +23,19 @@ import com.example.demo.repository.UserRepository;
 @Business
 public class UserBusiness {
     
-    private UserRepository userRepository;
-    private RoleRepository roleRepository;
-    private BCryptPasswordEncoder passwordEncoder;
-    private Set<String> defaultRoles;
-
-    private RabbitTemplate rabbitTemplate;
-    private Exchange exchange;
+    private final UserRepository userRepository;
+    private final RoleRepository roleRepository;
+    private final BCryptPasswordEncoder passwordEncoder;
+    private final Set<String> defaultRoles;
+    private final UserMessaging userMessaging;
 
     public UserBusiness(
-            
-            Exchange exchange,
-            RabbitTemplate rabbitTemplate,
-
+            UserMessaging userMessaging,
             UserRepository userRepository, 
             RoleRepository roleRepository,
             @Value("${app.user.default.roles}") Set<String> defaultRoles) {
 
-        this.exchange = exchange;
-        this.rabbitTemplate = rabbitTemplate;
+        this.userMessaging = userMessaging;
 
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;   
@@ -98,11 +95,12 @@ public class UserBusiness {
 
         userRepository.save(user); 
 
-        String body = "Usuário criado: " + user.getEmail();
-        Message msg = new Message(body.getBytes());
-        rabbitTemplate.send(exchange.getName(), 
-                            "usuario.criado",
-                            msg);
+        userMessaging.sendNotification(new Notification(
+            user.getEmail(),
+            "Sua Conta foi Criada com Sucesso",
+            "Bem-vindo a bordo do nosso espetacular serviço de usuários. lorem ipsum dolor nocet",
+            List.of("mail")
+        ));
 
         /*
          * notification.send( // AGENDADO (BACKGROUND)

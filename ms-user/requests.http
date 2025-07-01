@@ -12,9 +12,9 @@ Host: localhost:8081
 Content-Type: application/json
 
 {
-    "email": "batata@potato.com",
+    "email": "batata@potato.com1",
     "password": "1234RT56",
-    "handle": "papas",
+    "handle": "papas1",
     "name": "Kartofel",
     "roles": [
         "ROLE_USER"

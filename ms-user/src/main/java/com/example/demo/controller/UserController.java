@@ -54,7 +54,6 @@ public class UserController extends AbstractController {
         NewUser newUser) {
 
         userBusiness.criarUsuario(newUser);
-
     }
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
